@@ -1,2 +1,2 @@
 # git-sync-example
-サイドカーパターンを試す
+- Kubernetesサイドカーパターンを試す
