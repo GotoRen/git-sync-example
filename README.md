@@ -65,6 +65,14 @@ git-sync     NodePort    10.99.127.180   <none>        80:31023/TCP   69s
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        29d
 
 ### アクセス先のURLを取得
-$ kubectl port-forward git-sync-c65b77d57-79c52 8080:80
+$ minikube service git-sync --url
+🏃  Starting tunnel for service git-sync.
+|-----------|----------|-------------|------------------------|
+| NAMESPACE |   NAME   | TARGET PORT |          URL           |
+|-----------|----------|-------------|------------------------|
+| default   | git-sync |             | http://127.0.0.1:55500 |
+|-----------|----------|-------------|------------------------|
+http://127.0.0.1:55500
+❗  Dockerドライバーをdarwin上で動かしているため、実行するにはターミナルを開く必要があります。
 ```
-- [http://locahost:8080](http://locahost:8080)
+- [http://127.0.0.1:55500](http://127.0.0.1:55500)
