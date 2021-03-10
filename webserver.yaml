@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      ## コンテナの定義
+      containers:
+        ## 1つ目のコンテナ：Nginx
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: contents-vol
+              readOnly: true
+        ## 2つ目のコンテナ：GitHubからpullしてくるコンテナ
+        - name: cloner
+          image: maho/c-cloner:0.1
+          env:
+            - name: CONTENTS_SOURCE_URL
+              # ここのリポジトリは適当な公開リポジトリを設定する
+              value: https://github.com/reireias/git-sync-example.git
+          volumeMounts:
+            - mountPath: /data
+              name: contents-vol
+      ## 共有ボリューム
+      volumes:
+        - name: contents-vol
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver
+  labels:
+    app: webserver
+spec:
+  selector:
+    app: webserver
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
