@@ -4,9 +4,9 @@
 if [ -z $CONTENTS_SOURCE_URL ]; then
    exit 1
 fi
-# 初回は GitLab からコンテンツをクローンする
+# 初回は GitHubからコンテンツをクローン
 git clone $CONTENTS_SOURCE_URL /data
-# 2 回目以降は、1 分ごとに変更差分を取得する
+# 2回目以降は、1分ごとに変更差分を取得
 cd /data
 while true
 do

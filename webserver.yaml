@@ -1,4 +1,5 @@
 ---
+### Deployment: 2つのコンテナと共有ボリュームを定義
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,30 +14,31 @@ spec:
       labels:
         app: webserver
     spec:
-      ## コンテナの定義
+      ### コンテナの定義
       containers:
-        ## 1つ目のコンテナ：Nginx
+        ### 1. Nginxのコンテナ
         - name: nginx
           image: nginx
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: contents-vol
               readOnly: true
-        ## 2つ目のコンテナ：GitHubからpullしてくるコンテナ
+        ### 2. GitHubからpullしてくるコンテナ
         - name: cloner
           image: maho/c-cloner:0.1
           env:
+            ### Gitリポジトリを指定
             - name: CONTENTS_SOURCE_URL
-              # ここのリポジトリは適当な公開リポジトリを設定する
-              value: https://github.com/reireias/git-sync-example.git
+              value: https://github.com/GotoRen/git-sync-example.git
           volumeMounts:
             - mountPath: /data
               name: contents-vol
-      ## 共有ボリューム
+      ### 共有ボリューム
       volumes:
         - name: contents-vol
           emptyDir: {}
 ---
+### Service: NodePortを定義して外部へ公開出来るようにする
 apiVersion: v1
 kind: Service
 metadata:
