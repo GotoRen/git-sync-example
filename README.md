@@ -23,11 +23,26 @@ $ kubectl apply -f webserver.yaml
 
 ### コンポーネント一覧の取得
 $ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+webserver-6dcc867df8-qfw46   2/2     Running   0          3m25s
+
 $ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        29d
+webserver    NodePort    10.98.144.247   <none>        80:32617/TCP   3m46s
 
 ### アクセス先のURLを取得
 $ minikube service webserver --url
+🏃  Starting tunnel for service webserver.
+|-----------|-----------|-------------|------------------------|
+| NAMESPACE |   NAME    | TARGET PORT |          URL           |
+|-----------|-----------|-------------|------------------------|
+| default   | webserver |             | http://127.0.0.1:53472 |
+|-----------|-----------|-------------|------------------------|
+http://127.0.0.1:53472
+❗  Dockerドライバーをdarwin上で動かしているため、実行するにはターミナルを開く必要があります。
 ```
+- [http://locahost:53472](http://locahost:53472)
 *****
 ## 🌱 既存のコンテナ（git-sync）を利用する
 - `git-sync.yaml`
@@ -41,8 +56,15 @@ $ kubectl apply -f git-sync.yaml
 
 ### コンポーネント一覧の取得
 $ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+git-sync-c65b77d57-79c52   2/2     Running   0          28s
+
 $ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+git-sync     NodePort    10.99.127.180   <none>        80:31023/TCP   69s
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        29d
 
 ### アクセス先のURLを取得
-$ minikube service git-sync --url
+$ kubectl port-forward git-sync-c65b77d57-79c52 8080:80
 ```
+- [http://locahost:8080](http://locahost:8080)
