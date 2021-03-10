@@ -1,6 +1,8 @@
 # git-sync-example
 ## 💡 Overview
 - Kubernetes Sidecar patternを試す
+![pic08](https://user-images.githubusercontent.com/63791288/110704920-fed3b980-8238-11eb-9b47-d9ea5c710655.jpg)
+
 
 ## 👩‍🚒 自力でGitリポジトリからの取り込みコンテナを実装する
 - `contents-puller.sh`
