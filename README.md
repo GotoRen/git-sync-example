@@ -1,6 +1,6 @@
 # git-sync-example
 ## 💡 Overview
-- Kubernetes Sidecar patternを試す
+- Kubernetes Sidecar pattern
 ![pic08](https://user-images.githubusercontent.com/63791288/110704920-fed3b980-8238-11eb-9b47-d9ea5c710655.jpg)
 
 
@@ -78,3 +78,29 @@ http://127.0.0.1:55500
 ❗  Dockerドライバーをdarwin上で動かしているため、実行するにはターミナルを開く必要があります。
 ```
 - [http://127.0.0.1:55500](http://127.0.0.1:55500)
+
+## 🔎 Monitoring
+- __Prometheus__：グラフ化 / ダッシュボード表示
+- __Grafana__：ログ分析 / データ可視化
+```
+### Build & Run
+$ docker-compose up -d
+
+### 確認
+=== * 起動するDockerコンテナ * ===
+$ docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED        STATUS         PORTS                                                                                                      NAMES
+564a512039ec   prom/prometheus                       "/bin/prometheus --c…"   12 hours ago   Up 2 seconds   0.0.0.0:9090->9090/tcp                                                                                     prometheus
+a0affa135a90   grafana/grafana                       "/run.sh"                12 hours ago   Up 2 seconds   0.0.0.0:3000->3000/tcp                                                                                     grafana
+
+=== * 作成されるDockerイメージ * ===
+$ docker images
+REPOSITORY                                                     TAG                                                     IMAGE ID       CREATED         SIZE
+prom/prometheus                                                latest                                                  a618f5685492   3 weeks ago     175MB
+grafana/grafana                                                latest                                                  c9e576dccd68   2 weeks ago     198MB
+
+=== * 作成されるDockerネットワーク * ===
+$ docker network ls
+NETWORK ID     NAME                     DRIVER    SCOPE
+1e0c95d851fe   monitoring_default       bridge    local
+```
